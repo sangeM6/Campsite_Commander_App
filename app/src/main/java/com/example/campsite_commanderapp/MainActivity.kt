@@ -191,6 +191,7 @@ fun MainScreen(
                 unfocusedLabelColor = Color.White
             )
         )
+
             if(errorMessage.isNotBlank()){
                 Text(
                     text = errorMessage,
