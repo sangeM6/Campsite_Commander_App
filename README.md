@@ -36,11 +36,6 @@ The purpose of this application is to help users:
 * Android Studio
 * Coroutines
 
-##Refences
-W3Schools n.d. _Kotlin Arrays_ [online]. Available at:https://www.w3schools.com/kotlin/kotlin_arrays.php (Accessed on:10 June 2026).
-Kotlin n.d. _Condition and Loops_ [online]. Available at: https://kotlinlang.org/docs/control-flow.html#when-expressions-and-statements (Accessed on:10 June 2026).
-* Material 3 Design Components
-
 ## Code Example
 var totalItems =0
 for (q in quantities) {
@@ -48,6 +43,19 @@ for (q in quantities) {
     }
 
 this code adds the total packed items, it loops through the quantities and then store the number in q and then go add it to totalItems then the new value of totalItems will be whatever number was found in q .
+
+## Screenshots
+### Main Screen Error Message Screen
+![Error Message](drawable/Screenshot1.png)
+
+### Main Screen 
+![Main Screen](drawable/Screenshow2.png)
+
+### Gear List Table
+![Table View](drawable/Screenshot3.png)
+
+## Video
+[!Watch Video](https://youtu.be/YhAjGOo-ppQ)
 
 ## GitHub Usage
 * Version control of the project.
@@ -70,3 +78,10 @@ this code adds the total packed items, it loops through the quantities and then 
 
 ## Summary
 This project demonstrates the use of Jetpack Compose, state management, and parallel array to build a functional mobile application for managing camping gear efficiently. It focuses on usability, organisation, and clean UI design.
+
+## Author
+ZUSANGE MBALEKI
+
+## Refences
+W3Schools n.d. _Kotlin Arrays_ [online]. Available at:https://www.w3schools.com/kotlin/kotlin_arrays.php (Accessed on:10 June 2026).
+Kotlin n.d. _Condition and Loops_ [online]. Available at: https://kotlinlang.org/docs/control-flow.html#when-expressions-and-statements (Accessed on:10 June 2026).
