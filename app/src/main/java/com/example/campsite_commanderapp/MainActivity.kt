@@ -93,6 +93,7 @@ fun SplashScreen(onFinish: () -> Unit){
         delay(3000)
         onFinish()
     }
+
     Column(
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
