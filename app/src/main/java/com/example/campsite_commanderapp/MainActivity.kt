@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
@@ -52,14 +52,19 @@ fun CampingApp(){
         mutableStateListOf(1,1,1)
     }
     val notes = remember {
-        mutableStateListOf("2-person tent", "Gas stove", "Bandages and antiseptic")
+        mutableStateListOf("2-person tent", "Gas stove", "Antiseptics")
     }
-    var darkMode by remember {mutableStateOf(false)}
+
     MaterialTheme(
-        colorScheme = if(darkMode)
-            darkColorScheme()
-        else
-            lightColorScheme()
+        colorScheme = darkColorScheme(
+            background = Color(0xFF0F1412),
+            surface= Color(0xFF1B2A22),
+            primary = Color(0xFF4CAF50),
+            onBackground = Color.White,
+            onSurface = Color.White,
+            onPrimary = Color.Black
+        )
+
     )
     {
         when {
@@ -72,7 +77,7 @@ fun CampingApp(){
                 DetailsScreen(items, categories, quantities, notes){showDetails = false}
             }
             else -> {
-                MainScreen(items, categories,quantities,notes,darkMode,{darkMode = it}){showDetails = true}
+                MainScreen(items, categories,quantities,notes){showDetails = true}
             }
         }
     }
@@ -96,7 +101,8 @@ fun SplashScreen(onFinish: () -> Unit){
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = "Campsite Commander",
-            style = MaterialTheme.typography.headlineLarge
+            style = MaterialTheme.typography.headlineLarge,
+            color = Color.White
         )
     }
 }
@@ -107,14 +113,13 @@ fun MainScreen(
     categories : MutableList<String>,
     quantities : MutableList<Int>,
     notes : MutableList<String>,
-    darkMode: Boolean,
-    onDarkModeChange: (Boolean) -> Unit,
     onViewDetails : () -> Unit
 ){
     var item by remember {mutableStateOf("")}
     var category by remember {mutableStateOf("")}
     var quantity by remember {mutableStateOf("")}
     var note by remember {mutableStateOf("")}
+    var errorMessage by remember {mutableStateOf("")}
 
     // Calculating the total items using a loop
     var totalItems = 0
@@ -124,45 +129,75 @@ fun MainScreen(
         modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text("Campsite Commander")
+        Text("Campsite Commander",
+            color = Color.White)
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            Text("Dark Mode")
 
-            Switch(checked = darkMode,
-            onCheckedChange = onDarkModeChange
-            )
-        }
 
-        Text("Total Items Packed: $totalItems")
+        Text("Total Items Packed: $totalItems",
+            color = Color.White)
 
         //User input fields
         OutlinedTextField(
             value = item,
             onValueChange = { item = it },
             label = { Text("Enter Item Name") },
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                cursorColor = Color.White,
+                focusedLabelColor= Color.White,
+                unfocusedLabelColor = Color.White
+            )
         )
         OutlinedTextField(
             value = category,
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { category = it },
-            label = { Text("Enter Category Name (Shelter/Cooking/First Aid") },
-            shape = RoundedCornerShape(12.dp)
+            label = { Text("Category Name (Shelter/Cooking/First Aid") },
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                cursorColor = Color.White,
+                focusedLabelColor= Color.White,
+                unfocusedLabelColor = Color.White
+            )
         )
         OutlinedTextField(
             value = quantity,
             onValueChange = { quantity = it },
             label = { Text("Enter quantity") },
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                cursorColor = Color.White,
+                focusedLabelColor= Color.White,
+                unfocusedLabelColor = Color.White
+            )
         )
         OutlinedTextField(
             value = note,
             onValueChange = { note = it },
             label = { Text("Enter a note") },
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                cursorColor = Color.White,
+                focusedLabelColor= Color.White,
+                unfocusedLabelColor = Color.White
+            )
         )
+            if(errorMessage.isNotBlank()){
+                Text(
+                    text = errorMessage,
+                    color = Color(0xFFFFA276)
+                )
+            }
+
         Row (
             modifier= Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -178,6 +213,9 @@ fun MainScreen(
                     category = ""
                     quantity = ""
                     note = ""
+                    errorMessage = ""
+                }else{
+                    errorMessage = "⚠ Please item, category, quantity and a note."
                 }
             }) {
                 Text("Add Gear")
@@ -199,7 +237,7 @@ fun DetailsScreen(
     Column(
         modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp)
     ) {
-        Text("Campsite Commander List")
+        Text("Campsite Commander List", color = Color.White)
         Spacer(modifier = Modifier.height(10.dp))
 
         TableRow(
@@ -221,7 +259,7 @@ fun DetailsScreen(
                 )
             )
 
-            Divider()
+            HorizontalDivider()
         }
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = onBack) {
@@ -232,7 +270,7 @@ fun DetailsScreen(
 }
 @Composable
 fun HorizontalLine() {
-    Divider(thickness = 1.dp)
+    HorizontalDivider(thickness = 1.dp)
 }
 @Composable
 fun TableRow(
@@ -249,6 +287,7 @@ fun TableRow(
             ){
                 Text(
                     text = cell,
+                    color =Color.White,
                     style = if (isHeader)
                         MaterialTheme.typography.titleMedium
                     else
@@ -258,7 +297,7 @@ fun TableRow(
                 )
             }
             if (index != cells.lastIndex){
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.width(1.dp).height(30.dp)
                 )
             }
