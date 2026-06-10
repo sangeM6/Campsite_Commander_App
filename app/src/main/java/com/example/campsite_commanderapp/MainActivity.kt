@@ -20,7 +20,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.foundation.Image
 import kotlinx.coroutines.delay
-
+import GearItem
+import androidx.compose.runtime.internal.liveLiteral
 
 
 class MainActivity : ComponentActivity() {
@@ -28,14 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Campsite_CommanderAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            CampingApp()
         }
     }
 }
@@ -82,7 +76,10 @@ fun CampingApp(){
                 }
             }
             showDetails ->{
-                DetailsScreen(items, categories, quantities, notes){showDetails = true}
+                DetailsScreen(items, categories, quantities, notes){showDetails = false}
+            }
+            else -> {
+                MainScreen(items, categories,quantities,notes){showDetails = true}
             }
         }
     }
@@ -110,3 +107,148 @@ fun SplashScreen(onFinish: () -> Unit){
         )
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen(
+    items: MutableList<String>,
+    categories : MutableList<String>,
+    quantities : MutableList<Int>,
+    notes : MutableList<String>,
+    onViewDetails : () -> Unit
+){
+    var item by remember {mutableStateOf("")}
+    var category by remember {mutableStateOf("")}
+    var quantity by remember {mutableStateOf("")}
+    var note by remember {mutableStateOf("")}
+
+    // Calculating the total items using loop
+    var totalItems = 0
+    for (i in quantities) totalItems += i
+
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ){
+        Text("Campsite Commander")
+        Text("Total Items Packed: $totalItems")
+
+        //User input fields
+        OutlinedTextField(
+            value = item,
+            onValueChange = {item = it},
+            label = {Text("Enter Item Name")}
+        )
+        OutlinedTextField(
+            value = category,
+            onValueChange = {category = it},
+            label = {Text("Enter Category Name (Shelter/Cooking/First Aid")}
+        )
+        OutlinedTextField(
+            value = quantity,
+            onValueChange = {quantity = it},
+            label = {Text("Enter quantity")}
+        )
+        OutlinedTextField(
+            value = note,
+            onValueChange = {note = it},
+            label = {Text("Enter a note")}
+        )
+        Button(onClick = {
+            if (item.isNotBlank() && category.isNotBlank() && quantity.isNotBlank()){
+                items.add(item)
+                categories.add(category)
+                quantities.add(quantity.toInt())
+                notes.add(note)
+
+                item =""
+                category =""
+                quantity =""
+                note =""
+            }
+        }) {
+            Text("Add Gear")
+        }
+        Button(onClick = onViewDetails){
+            Text("View Full List")
+        }
+    }
+}
+@Composable
+fun DetailsScreen(
+    items: List<String>,
+    categories:List<String>,
+    quantities: List<Int>,
+    notes:List<String>,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp)
+    ) {
+        Text("Campsite Commander List")
+        Spacer(modifier = Modifier.height(10.dp))
+
+        TableRow(
+            listOf("Item", "Category", "Qty", "Notes"),
+                    isHeader =true
+        )
+
+        HorizontalLine()
+
+        for (q in items.indices) {
+            TableRow(
+                listOf(
+                    items[q],
+                    categories[q],
+                    quantities[q].toString(),
+                    notes[q]
+
+
+                )
+            )
+
+            Divider()
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = onBack) {
+            Text("Back To Base")
+        }
+
+    }
+}
+@Composable
+fun HorizontalLine() {
+    Divider(thickness = 1.dp)
+}
+@Composable
+fun TableRow(
+    cells: List<String>,
+    isHeader: Boolean = false
+){
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(vertical =6.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
+        cells.forEachIndexed{ index, cell ->
+            Box(
+                modifier= Modifier.weight(1f).padding(4.dp)
+            ){
+                Text(
+                    text = cell,
+                    style = if (isHeader)
+                        MaterialTheme.typography.titleMedium
+                    else
+                        MaterialTheme.typography.bodyMedium
+
+
+                )
+            }
+            if (index != cells.lastIndex){
+                Divider(
+                    modifier = Modifier.width(1.dp).height(30.dp)
+                )
+            }
+        }
+    }
+}
+
+
