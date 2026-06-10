@@ -46,13 +46,13 @@ this code adds the total packed items, it loops through the quantities and then 
 
 ## Screenshots
 ### Main Screen Error Message Screen
-![Error Message](res/drawable/Screenshot1.png)
+![Error Message](https:raw.githubusercontent.com/sangeM6/Campsite-Commander_App/main/app/src/mainres/drawable/Screenshot1.png)
 
 ### Main Screen 
-![Main Screen](res/drawable/Screenshow2.png)
+![Main Screen](https:raw.githubusercontent.com/sangeM6/Campsite-Commander_App/main/app/src/mainres/drawable/Screenshot2.png) 
 
 ### Gear List Table
-![Table View](res/drawable/Screenshot3.png)
+![Table View](https:raw.githubusercontent.com/sangeM6/Campsite-Commander_App/main/app/src/mainres/drawable/Screenshot3.png)
 
 ## Video
 [!Watch Video](https://youtu.be/YhAjGOo-ppQ)
