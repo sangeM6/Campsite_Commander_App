@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,8 +20,8 @@ import androidx.compose.runtime.*
 import androidx.compose.foundation.Image
 import kotlinx.coroutines.delay
 import androidx.compose.foundation.shape.RoundedCornerShape
-import GearItem
-import androidx.compose.runtime.internal.liveLiteral
+import androidx.compose.material3.MaterialTheme
+
 
 
 class MainActivity : ComponentActivity() {
@@ -68,7 +67,13 @@ fun CampingApp(){
     val notes = remember {
         mutableStateListOf("2-person tent", "Gas stove", "Bandages and antiseptic")
     }
-    androidx.compose.material3.MaterialTheme(colorScheme = androidx.compose.material3.darkColorScheme())
+    var darkMode by remember {mutableStateOf(false)}
+    MaterialTheme(
+        colorScheme = if(darkMode)
+            darkColorScheme()
+        else
+            lightColorScheme()
+    )
     {
         when {
             showSplash-> {
@@ -80,7 +85,7 @@ fun CampingApp(){
                 DetailsScreen(items, categories, quantities, notes){showDetails = false}
             }
             else -> {
-                MainScreen(items, categories,quantities,notes){showDetails = true}
+                MainScreen(items, categories,quantities,notes,darkMode,{darkMode = it}){showDetails = true}
             }
         }
     }
@@ -115,6 +120,8 @@ fun MainScreen(
     categories : MutableList<String>,
     quantities : MutableList<Int>,
     notes : MutableList<String>,
+    darkMode: Boolean,
+    onDarkModeChange: (Boolean) -> Unit,
     onViewDetails : () -> Unit
 ){
     var item by remember {mutableStateOf("")}
@@ -131,6 +138,17 @@ fun MainScreen(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text("Campsite Commander")
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            Text("Dark Mode")
+
+            Switch(checked = darkMode,
+            onCheckedChange = onDarkModeChange
+            )
+        }
+
         Text("Total Items Packed: $totalItems")
 
         //User input fields
