@@ -133,7 +133,6 @@ fun MainScreen(
             color = Color.White)
 
 
-
         Text("Total Items Packed: $totalItems",
             color = Color.White)
 
