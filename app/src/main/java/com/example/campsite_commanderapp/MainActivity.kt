@@ -20,6 +20,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.foundation.Image
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.shape.RoundedCornerShape
 import GearItem
 import androidx.compose.runtime.internal.liveLiteral
 
@@ -121,55 +122,64 @@ fun MainScreen(
     var quantity by remember {mutableStateOf("")}
     var note by remember {mutableStateOf("")}
 
-    // Calculating the total items using loop
+    // Calculating the total items using a loop
     var totalItems = 0
     for (i in quantities) totalItems += i
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
-    ){
+    ) {
         Text("Campsite Commander")
         Text("Total Items Packed: $totalItems")
 
         //User input fields
         OutlinedTextField(
             value = item,
-            onValueChange = {item = it},
-            label = {Text("Enter Item Name")}
+            onValueChange = { item = it },
+            label = { Text("Enter Item Name") },
+            shape = RoundedCornerShape(12.dp)
         )
         OutlinedTextField(
             value = category,
-            onValueChange = {category = it},
-            label = {Text("Enter Category Name (Shelter/Cooking/First Aid")}
+            onValueChange = { category = it },
+            label = { Text("Enter Category Name (Shelter/Cooking/First Aid") },
+            shape = RoundedCornerShape(12.dp)
         )
         OutlinedTextField(
             value = quantity,
-            onValueChange = {quantity = it},
-            label = {Text("Enter quantity")}
+            onValueChange = { quantity = it },
+            label = { Text("Enter quantity") },
+            shape = RoundedCornerShape(12.dp)
         )
         OutlinedTextField(
             value = note,
-            onValueChange = {note = it},
-            label = {Text("Enter a note")}
+            onValueChange = { note = it },
+            label = { Text("Enter a note") },
+            shape = RoundedCornerShape(12.dp)
         )
-        Button(onClick = {
-            if (item.isNotBlank() && category.isNotBlank() && quantity.isNotBlank()){
-                items.add(item)
-                categories.add(category)
-                quantities.add(quantity.toInt())
-                notes.add(note)
+        Row (
+            modifier= Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ){
+            Button(onClick = {
+                if (item.isNotBlank() && category.isNotBlank() && quantity.isNotBlank()) {
+                    items.add(item)
+                    categories.add(category)
+                    quantities.add(quantity.toInt())
+                    notes.add(note)
 
-                item =""
-                category =""
-                quantity =""
-                note =""
+                    item = ""
+                    category = ""
+                    quantity = ""
+                    note = ""
+                }
+            }) {
+                Text("Add Gear")
             }
-        }) {
-            Text("Add Gear")
-        }
-        Button(onClick = onViewDetails){
-            Text("View Full List")
+            Button(onClick = onViewDetails) {
+                Text("View Full List")
+            }
         }
     }
 }
@@ -182,7 +192,7 @@ fun DetailsScreen(
     onBack: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp)
     ) {
         Text("Campsite Commander List")
         Spacer(modifier = Modifier.height(10.dp))
