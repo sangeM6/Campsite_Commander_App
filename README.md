@@ -46,13 +46,13 @@ this code adds the total packed items, it loops through the quantities and then 
 
 ## Screenshots
 ### Main Screen Error Message Screen
-![Error Message](drawable/Screenshot1.png)
+![Error Message](assets/Screenshot1.png)
 
 ### Main Screen 
-![Main Screen](drawable/Screenshow2.png)
+![Main Screen](assets/Screenshow2.png)
 
 ### Gear List Table
-![Table View](drawable/Screenshot3.png)
+![Table View](assets/Screenshot3.png)
 
 ## Video
 [!Watch Video](https://youtu.be/YhAjGOo-ppQ)
