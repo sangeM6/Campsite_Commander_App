@@ -35,6 +35,10 @@ The purpose of this application is to help users:
 * Jetpack Compose
 * Android Studio
 * Coroutines
+
+##Refences
+W3Schools n.d. _Kotlin Arrays_ [online]. Available at:https://www.w3schools.com/kotlin/kotlin_arrays.php (Accessed on:10 June 2026).
+Kotlin n.d. _Condition and Loops_ [online]. Available at: https://kotlinlang.org/docs/control-flow.html#when-expressions-and-statements (Accessed on:10 June 2026).
 * Material 3 Design Components
 
 ## Code Example
